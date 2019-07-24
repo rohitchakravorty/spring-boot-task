@@ -5,6 +5,7 @@ import com.stackroute.boot.repository.TrackRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -15,13 +16,23 @@ public class ApplicationStart implements ApplicationListener<ApplicationReadyEve
     private static final Logger logger = LoggerFactory.getLogger(ApplicationStart.class);
     @Autowired
     private TrackRepository trackRepository;
+
+    @Value("${name}")
+    private String name;
+    @Value("${comment}")
+    private String comment;
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent event) {
-        trackRepository.save(new Track(1, "rohit", "hi"));
+        trackRepository.save(new Track(1, name, comment));
     }
+    @Value("${name1}")
+    private String name1;
+
+    @Value("${comment1}")
+    private String comment1;
     @Override
     public void run(String... args) throws Exception {
-        trackRepository.save(new Track(2, "sabya", "hello"));
+        trackRepository.save(new Track(2, name1, comment1));
         trackRepository.findAll().forEach((track) -> {
             logger.info("{}", track);
         });
