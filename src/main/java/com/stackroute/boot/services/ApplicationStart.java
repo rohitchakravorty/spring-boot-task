@@ -23,7 +23,7 @@ public class ApplicationStart implements ApplicationListener<ApplicationReadyEve
     private String comment;
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent event) {
-        trackRepository.save(new Track(1, name, comment));
+        trackRepository.save(new Track(1,name,comment));
     }
     @Value("${name1}")
     private String name1;
@@ -32,7 +32,7 @@ public class ApplicationStart implements ApplicationListener<ApplicationReadyEve
     private String comment1;
     @Override
     public void run(String... args) throws Exception {
-        trackRepository.save(new Track(2, name1, comment1));
+        trackRepository.save(new Track(2,name1,comment1));
         trackRepository.findAll().forEach((track) -> {
             logger.info("{}", track);
         });
