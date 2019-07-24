@@ -1,6 +1,7 @@
 package com.stackroute.boot.controller;
 
 import com.stackroute.boot.dao.TrackDAO;
+import com.stackroute.boot.exception.TrackAlreadyExistsException;
 import com.stackroute.boot.model.Track;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class TrackController {
 			trackDAO.saveTrack(track);
 			responseEntity = new ResponseEntity("Successfully created", HttpStatus.CREATED);
 		}
-		catch(Exception ex) {
+		catch(TrackAlreadyExistsException ex) {
 			responseEntity = new ResponseEntity<String>(ex.getMessage(), HttpStatus.CONFLICT);
 		}
 		return responseEntity;

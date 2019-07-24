@@ -3,6 +3,8 @@ package com.stackroute.boot.dao;
 import java.util.List;
 import java.util.Optional;
 
+import com.stackroute.boot.exception.TrackAlreadyExistsException;
+import com.stackroute.boot.exception.TrackNotFoundException;
 import com.stackroute.boot.repository.TrackRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -24,17 +26,27 @@ public class TrackDAOImpl implements TrackDAO {
 
 	//implement all the methods
 	@Override
-	public Track saveTrack(Track track) {
+	public Track saveTrack(Track track) throws TrackAlreadyExistsException {
 
+		if(trackRepository.existsById(track.getId()))
+		{
+			throw new TrackAlreadyExistsException("The track already exists");
+		}
 		Track track1 = trackRepository.save(track);
 		return track1;
 	}
 
 	@Override
-	public boolean deleteTrack(int id) {
+	public boolean deleteTrack(int id) throws TrackNotFoundException{
 
-		trackRepository.deleteById(id);
-		return true;
+		if(!trackRepository.findById(id).isPresent())
+		{
+			throw new TrackNotFoundException("The track does not exist");
+		}
+		else {
+			trackRepository.deleteById(id);
+			return true;
+		}
 	}
 
 	@Override
