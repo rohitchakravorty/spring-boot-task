@@ -20,13 +20,8 @@ public class TrackController {
 	@Autowired
 	TrackDAO trackDAO;
 	//update all the methods with code
-	@RequestMapping("/")
-	public String indexPage(Model model) {
-		List<Track> list = trackDAO.getAllTracks();
-		model.addAttribute("tracks", list);
-		return "index";
-	}
-	@RequestMapping("/saveTrack")
+
+	@PostMapping("/saveTrack")
 	public ResponseEntity<?> saveTrack(@RequestBody Track track)
 	{
 		ResponseEntity responseEntity;
@@ -42,7 +37,7 @@ public class TrackController {
 	}
 
 
-	@RequestMapping("/updateTrack/{id}")
+	@PostMapping("/updateTrack/{id}")
 	public ResponseEntity<?> updateTrack(@RequestBody Track track)
 	{
 		ResponseEntity responseEntity;
@@ -71,11 +66,11 @@ public class TrackController {
 		}
 		return responseEntity;
 	}
-	@RequestMapping("/getAllTracks")
+	@GetMapping("/getAllTracks")
 	public ResponseEntity<?> getAllUsers() {
 		return new ResponseEntity<>(trackDAO.getAllTracks(), HttpStatus.OK);
 	}
-	@RequestMapping("/user")
+	@GetMapping("/user")
 	public List<Track> findByTrack(@RequestBody String name)
 	{
 		return  trackDAO.getTrackByName(name);
