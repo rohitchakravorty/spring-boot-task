@@ -75,4 +75,9 @@ public class TrackController {
 	public ResponseEntity<?> getAllUsers() {
 		return new ResponseEntity<>(trackDAO.getAllTracks(), HttpStatus.OK);
 	}
+	@RequestMapping("/user")
+	public List<Track> findByTrack(@RequestBody String name)
+	{
+		return  trackDAO.getTrackByName(name);
+	}
 }

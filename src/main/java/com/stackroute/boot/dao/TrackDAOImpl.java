@@ -58,4 +58,9 @@ public class TrackDAOImpl implements TrackDAO {
 
 	}
 
+	@Override
+	public List<Track> getTrackByName(String name) {
+		return trackRepository.findTrackByName(name);
+
+	}
 }

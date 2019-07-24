@@ -22,6 +22,7 @@ public interface TrackDAO {
 
 	public boolean UpdateTrack(int id,Track track);
 
+	public List<Track> getTrackByName(String name);
 
    
 }
