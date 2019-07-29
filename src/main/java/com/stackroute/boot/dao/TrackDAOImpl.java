@@ -39,7 +39,7 @@ public class TrackDAOImpl implements TrackDAO {
 	@Override
 	public boolean deleteTrack(int id) throws TrackNotFoundException{
 
-		if(!trackRepository.findById(id).isPresent())
+		if(!trackRepository.findById(id).isEmpty())
 		{
 			throw new TrackNotFoundException("The track does not exist");
 		}
