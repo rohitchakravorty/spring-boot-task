@@ -1,1 +1,3 @@
-CRUD operation on Muzix 
+Muzix App assignment using mongoDB.
+With test cases.
+MongoDB

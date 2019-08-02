@@ -1,32 +1,47 @@
 package com.stackroute.boot.controller;
 
-import com.stackroute.boot.dao.TrackDAO;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.stackroute.boot.services.TrackService;
+import com.stackroute.boot.exception.TrackAlreadyExistsException;
 import com.stackroute.boot.model.Track;
+import com.stackroute.boot.services.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
+@JsonFilter("hello")
 public class TrackController {
 	@Autowired
-	TrackDAO trackDAO;
+    TrackService trackDAO;
 	//update all the methods with code
-	@RequestMapping("/")
-	public String indexPage(Model model) {
-		List<Track> list = trackDAO.getAllTracks();
-		model.addAttribute("tracks", list);
-		return "index";
+
+
+    public TrackController(TrackService trackDAO) {
+        this.trackDAO = trackDAO;
+    }
+
+    @PostMapping("/saveJson")
+	public ResponseEntity<?> saveTracksJson(@RequestBody List<Track> tracks)
+	{
+		ResponseEntity responseEntity;
+		for(Track t1:tracks)
+		{
+			try {
+				trackDAO.saveTrack(t1);
+			} catch (TrackAlreadyExistsException e) {
+				e.printStackTrace();e.printStackTrace();
+			}
+		}
+		responseEntity = new ResponseEntity("Successfully created", HttpStatus.CREATED);
+
+		return responseEntity;
 	}
-	@RequestMapping("/saveTrack")
+
+	@PostMapping("/track")
 	public ResponseEntity<?> saveTrack(@RequestBody Track track)
 	{
 		ResponseEntity responseEntity;
@@ -35,28 +50,28 @@ public class TrackController {
 			trackDAO.saveTrack(track);
 			responseEntity = new ResponseEntity("Successfully created", HttpStatus.CREATED);
 		}
-		catch(Exception ex) {
+		catch(TrackAlreadyExistsException ex) {
 			responseEntity = new ResponseEntity<String>(ex.getMessage(), HttpStatus.CONFLICT);
-		}
+		};
 		return responseEntity;
 	}
 
 
-	@RequestMapping("/updateTrack/{id}")
+	@PostMapping("/track/{id}")
 	public ResponseEntity<?> updateTrack(@RequestBody Track track)
 	{
 		ResponseEntity responseEntity;
 		try
 		{
 			trackDAO.saveTrack(track);
-			responseEntity = new ResponseEntity("Successfully updated", HttpStatus.CREATED);
+			responseEntity = new ResponseEntity("Successfully updated", HttpStatus.OK);
 		}
 		catch(Exception ex) {
 			responseEntity = new ResponseEntity<String>(ex.getMessage(), HttpStatus.CONFLICT);
 		}
 		return responseEntity;
 	}
-	@RequestMapping("/deleteTrack")
+	@DeleteMapping("/track")
 	public ResponseEntity<?> deleteTrack(@RequestBody Track track)
 	{
 
@@ -71,8 +86,13 @@ public class TrackController {
 		}
 		return responseEntity;
 	}
-	@RequestMapping("/getAllTracks")
+	@GetMapping("/track")
 	public ResponseEntity<?> getAllUsers() {
 		return new ResponseEntity<>(trackDAO.getAllTracks(), HttpStatus.OK);
 	}
+
+
+
+
+
 }
