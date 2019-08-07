@@ -12,16 +12,16 @@ import java.util.List;
 
 @RestController
 public class TrackController {
-	@Autowired
+
 	TrackService trackService;
-	//update all the methods with code
-	@RequestMapping("/")
-	public String indexPage(Model model) {
-		List<Track> list = trackService.getAllTracks();
-		model.addAttribute("tracks", list);
-		return "index";
+
+	@Autowired
+	public TrackController(TrackService trackService) {
+		this.trackService = trackService;
 	}
-	@RequestMapping("/saveTrack")
+//update all the methods with code
+
+	@PostMapping("/Track")
 	public ResponseEntity<?> saveTrack(@RequestBody Track track)
 	{
 		ResponseEntity responseEntity;
@@ -37,7 +37,7 @@ public class TrackController {
 	}
 
 
-	@RequestMapping("/updateTrack/{id}")
+	@PostMapping("/Track/{id}")
 	public ResponseEntity<?> updateTrack(@RequestBody Track track)
 	{
 		ResponseEntity responseEntity;
@@ -51,7 +51,7 @@ public class TrackController {
 		}
 		return responseEntity;
 	}
-	@RequestMapping("/deleteTrack")
+	@DeleteMapping("/Track")
 	public ResponseEntity<?> deleteTrack(@RequestBody Track track)
 	{
 
@@ -66,7 +66,7 @@ public class TrackController {
 		}
 		return responseEntity;
 	}
-	@RequestMapping("/getAllTracks")
+	@GetMapping("/Track")
 	public ResponseEntity<?> getAllUsers() {
 		return new ResponseEntity<>(trackService.getAllTracks(), HttpStatus.OK);
 	}
