@@ -1,4 +1,4 @@
-package com.stackroute.boot.services;
+package com.stackroute.boot.seedData;
 
 import com.stackroute.boot.model.Track;
 import com.stackroute.boot.repository.TrackRepository;
