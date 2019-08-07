@@ -7,7 +7,7 @@ import com.stackroute.boot.model.Track;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface TrackServices {
+public interface TrackService {
 
 	public Track saveTrack(Track track);
 

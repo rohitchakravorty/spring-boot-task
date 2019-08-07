@@ -10,11 +10,11 @@ import com.stackroute.boot.model.Track;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TrackServicesImpl implements TrackServices {
+public class TrackServiceImpl implements TrackService {
 
 	@Autowired
 	private TrackRepository trackRepository;
-	public TrackServicesImpl(TrackRepository trackRepository)
+	public TrackServiceImpl(TrackRepository trackRepository)
 	{
 		this.trackRepository = trackRepository;
 	}
