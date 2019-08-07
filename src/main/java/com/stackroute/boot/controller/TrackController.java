@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 public class TrackController {
 	@Autowired
-	TrackService trackService;
+	private TrackService trackService;
 	//update all the methods with code
 
 	@PostMapping("/saveTrack")
