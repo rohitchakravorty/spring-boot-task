@@ -15,11 +15,11 @@ import java.util.List;
 @RestController
 @JsonFilter("hello")
 public class TrackController {
-	@Autowired
-    TrackService trackDAO;
+
+    private TrackService trackDAO;
 	//update all the methods with code
 
-
+	@Autowired
     public TrackController(TrackService trackDAO) {
         this.trackDAO = trackDAO;
     }
