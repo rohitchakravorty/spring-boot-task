@@ -11,11 +11,15 @@ import java.util.List;
 
 @RestController
 public class TrackController {
-	@Autowired
 	TrackService trackService;
-	//update all the methods with code
 
-	@PostMapping("/saveTrack")
+	@Autowired
+	public TrackController(TrackService trackService) {
+		this.trackService = trackService;
+	}
+//update all the methods with code
+
+	@PostMapping("/Track")
 	public ResponseEntity<?> saveTrack(@RequestBody Track track)
 	{
 		ResponseEntity responseEntity;
@@ -31,7 +35,7 @@ public class TrackController {
 	}
 
 
-	@PostMapping("/updateTrack/{id}")
+	@PostMapping("/Track/{id}")
 	public ResponseEntity<?> updateTrack(@RequestBody Track track)
 	{
 		ResponseEntity responseEntity;
@@ -45,7 +49,7 @@ public class TrackController {
 		}
 		return responseEntity;
 	}
-	@RequestMapping("/deleteTrack")
+	@DeleteMapping("/Track")
 	public ResponseEntity<?> deleteTrack(@RequestBody Track track)
 	{
 
@@ -60,13 +64,8 @@ public class TrackController {
 		}
 		return responseEntity;
 	}
-	@GetMapping("/getAllTracks")
+	@GetMapping("/Track")
 	public ResponseEntity<?> getAllUsers() {
 		return new ResponseEntity<>(trackService.getAllTracks(), HttpStatus.OK);
-	}
-	@GetMapping("/user")
-	public List<Track> findByTrack(@RequestBody String name)
-	{
-		return  trackService.getTrackByName(name);
 	}
 }
