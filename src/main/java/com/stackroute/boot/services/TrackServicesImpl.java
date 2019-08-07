@@ -1,11 +1,8 @@
-package com.stackroute.boot.dao;
+package com.stackroute.boot.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.stackroute.boot.repository.TrackRepository;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,11 +10,11 @@ import com.stackroute.boot.model.Track;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TrackDAOImpl implements TrackDAO {
+public class TrackServicesImpl implements TrackServices {
 
 	@Autowired
 	private TrackRepository trackRepository;
-	public TrackDAOImpl(TrackRepository trackRepository)
+	public TrackServicesImpl(TrackRepository trackRepository)
 	{
 		this.trackRepository = trackRepository;
 	}

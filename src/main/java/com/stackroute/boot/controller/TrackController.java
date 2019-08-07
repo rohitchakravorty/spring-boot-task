@@ -1,28 +1,23 @@
 package com.stackroute.boot.controller;
 
-import com.stackroute.boot.dao.TrackDAO;
+import com.stackroute.boot.services.TrackServices;
 import com.stackroute.boot.model.Track;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class TrackController {
 	@Autowired
-	TrackDAO trackDAO;
+	TrackServices trackServices;
 	//update all the methods with code
 	@RequestMapping("/")
 	public String indexPage(Model model) {
-		List<Track> list = trackDAO.getAllTracks();
+		List<Track> list = trackServices.getAllTracks();
 		model.addAttribute("tracks", list);
 		return "index";
 	}
@@ -32,7 +27,7 @@ public class TrackController {
 		ResponseEntity responseEntity;
 		try
 		{
-			trackDAO.saveTrack(track);
+			trackServices.saveTrack(track);
 			responseEntity = new ResponseEntity("Successfully created", HttpStatus.CREATED);
 		}
 		catch(Exception ex) {
@@ -48,7 +43,7 @@ public class TrackController {
 		ResponseEntity responseEntity;
 		try
 		{
-			trackDAO.saveTrack(track);
+			trackServices.saveTrack(track);
 			responseEntity = new ResponseEntity("Successfully updated", HttpStatus.CREATED);
 		}
 		catch(Exception ex) {
@@ -63,7 +58,7 @@ public class TrackController {
 		ResponseEntity responseEntity;
 		try
 		{
-			trackDAO.deleteTrack(track.getId());
+			trackServices.deleteTrack(track.getId());
 			responseEntity = new ResponseEntity("Successfully deleted", HttpStatus.OK);
 		}
 		catch(Exception ex) {
@@ -73,11 +68,11 @@ public class TrackController {
 	}
 	@RequestMapping("/getAllTracks")
 	public ResponseEntity<?> getAllUsers() {
-		return new ResponseEntity<>(trackDAO.getAllTracks(), HttpStatus.OK);
+		return new ResponseEntity<>(trackServices.getAllTracks(), HttpStatus.OK);
 	}
 	@RequestMapping("/user")
 	public List<Track> findByTrack(@RequestBody String name)
 	{
-		return  trackDAO.getTrackByName(name);
+		return  trackServices.getTrackByName(name);
 	}
 }
