@@ -87,7 +87,7 @@ public class TrackController {
 		return responseEntity;
 	}
 	@GetMapping("/track")
-	public ResponseEntity<?> getAllUsers() {
+	public ResponseEntity<?> getAllTracks() {
 		return new ResponseEntity<>(trackDAO.getAllTracks(), HttpStatus.OK);
 	}
 
